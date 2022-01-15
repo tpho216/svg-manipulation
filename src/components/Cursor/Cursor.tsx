@@ -39,10 +39,11 @@ const Cursor : React.FC = () => {
                     position: "absolute",
                     left: clientX,
                     top: clientY,
-                    transform: `translate(-50%, -50%) scale(${cursor.active ? 2.5 : 1})`,
+                    // transform: `translate(-50%, -50%) scale(${cursor.active ? 2.5 : 1})`,
+                    transform: `translate(-50%, -50%)`,
                     stroke: cursor.active ? "black" : "white",
                     strokeWidth: 1,
-                    fill: cursor.active ? "rgba(255,255,255,.5)" : "black",
+                    // fill: cursor.active ? "rgba(255,255,255,.5)" : "black",
                     transition: "transform .2s ease-in-out",
                     // TODO: extra check on clientX needed here
                     // because mouseleave event not always firing
@@ -50,7 +51,9 @@ const Cursor : React.FC = () => {
                     opacity: isVisible && clientX > 1 ? 1 : 0,
                 }}
             >
-                <rect width="30" height="30"/>
+                {
+                    cursor.active ?  <rect width="30" height="30"/> : null
+                }
             </svg>
         </div>
     );
