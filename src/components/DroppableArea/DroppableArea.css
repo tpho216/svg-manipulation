@@ -1,0 +1,10 @@
+.dropArea {
+    fill: blue;
+}
+
+.dropArea-active {
+    stroke: red;
+    stroke-width: 2px;
+    stroke-dasharray: 3,3;
+    stroke-linejoin: round;
+}
