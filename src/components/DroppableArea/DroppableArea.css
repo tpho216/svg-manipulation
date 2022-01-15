@@ -1,10 +1,12 @@
 .dropArea {
-    fill: blue;
+    fill: white;
+    stroke: black;
 }
 
 .dropArea-active {
+    fill: white;
     stroke: red;
-    stroke-width: 2px;
+    stroke-width: 3;
     stroke-dasharray: 3,3;
     stroke-linejoin: round;
 }
