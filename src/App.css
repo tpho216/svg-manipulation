@@ -7,4 +7,6 @@
   align-items: center;
 }
 
-
+* {
+  cursor: auto;
+}

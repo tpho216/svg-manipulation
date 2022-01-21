@@ -11,7 +11,7 @@ type CursorContextValue = {
     setCursor : Dispatch<SetStateAction<CursorContextState>>
 }
 const defaultCursorContextValue : CursorContextValue = {
-    cursor : { active : false},
+    cursor : { active : true},
     setCursor : (cursor: ICursorContext) => {}
 }
 

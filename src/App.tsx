@@ -4,6 +4,9 @@ import Cursor from "./components/Cursor/Cursor";
 import CursorContextProvider from "./components/Provider/CursorContextProvider";
 import Button from "./components/Button/Button";
 import DroppableArea from "./components/DroppableArea/DroppableArea";
+import {Grid} from "./components/Grid/Grid";
+import {SpecialGrid} from "./components/SpecialGrid/SpecialGrid";
+import SingleRowGrid from "./components/SingleRowGrid/SingleRowGrid";
 
 function App() {
 
@@ -11,8 +14,11 @@ function App() {
     <div className="App">
         <CursorContextProvider>
             <Cursor/>
-            <Button/>
-            <DroppableArea/>
+            {/*<Button/>*/}
+            {/*<DroppableArea/>*/}
+            {/*<Grid/>*/}
+            {/*<SpecialGrid/>*/}
+            <SingleRowGrid/>
         </CursorContextProvider>
 
     </div>

@@ -8,7 +8,6 @@ const useCursorHandlers = (options : any  = {}) => {
         setCursor(({active}) => ({active: !active}));
     }
 
-
     const onMouseEnter = useCallback(event => {
         console.log("mouse enter");
         if (options.onMouseEnter) {

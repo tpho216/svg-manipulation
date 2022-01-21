@@ -32,6 +32,7 @@ const Cursor : React.FC = () => {
             }}
         >
             <svg
+                className="cursor"
                 width={50}
                 height={50}
                 viewBox="0 0 50 50"
@@ -52,9 +53,11 @@ const Cursor : React.FC = () => {
                 }}
             >
                 {
-                    cursor.active ?  <rect width="30" height="30"/> : null
+                    cursor.active ?  <rect width="40" height="38" fill="blue"/> : null
                 }
             </svg>
+            <p>{clientX}</p>
+            <p>{clientY}</p>
         </div>
     );
 };

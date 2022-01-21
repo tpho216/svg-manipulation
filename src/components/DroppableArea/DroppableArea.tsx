@@ -7,67 +7,103 @@ const DroppableArea : React.FC = () => {
     const { cursor ,setCursor } = useContext(CursorContext);
     const containerRef = useRef(null);
     const svgRef : any = useRef(null);
+    const rectRef : any = useRef(null);
     const [hovered, setHovered] = useState(false);
-    const [dropX, setDropX] = useState(1000);
-    const [dropY, setDropY] = useState(1000);
+
+    const [position, setPosition] = useState({
+        x: 1000,
+        y : 1000,
+        coords : { x: 0, y: 0}
+    })
 
     useEffect(() => {
         setTimeout(() => {
             const containerElem = containerRef.current;
-            console.log("useEffect containerElem: ", containerElem);
+            // console.log("useEffect containerElem: ", containerElem);
         }, 300)
 
     },[]);
 
     const handleMouseDown = (event : any) => {
-        console.log("mouse down...");
-        console.log("event.X: ", event.clientX);
-        console.log("event.Y: ", event.clientY);
+        // console.log("mouse down...");
+        // console.log("event.X: ", event.clientX);
+        // console.log("event.Y: ", event.clientY);
 
+        if (!cursor.active) {
+            return;
+        }
 
         const svgElem = svgRef.current;
-        console.log("Mouse down svgBBox: ", svgElem.getBoundingClientRect());
-        // const dropArea = document.querySelector('.dropArea');
-        // console.log(dropArea);
-        // const dropAreaBBox = dropArea?.getBoundingClientRect();
         const dropAreaBBox = svgElem.getBoundingClientRect();
         if (dropAreaBBox) {
-            console.log("dropArea X", dropAreaBBox.x);
-            console.log("dropArea Y", dropAreaBBox.y);
+            // console.log("dropArea X", dropAreaBBox.x);
+            // console.log("dropArea Y", dropAreaBBox.y);
 
             const mousePosInDropArea =  {
                 x : event.clientX - dropAreaBBox.x,
                 y: event.clientY - dropAreaBBox.y
             }
 
-            console.log("mousePosInDropArea X: ", mousePosInDropArea.x);
-            console.log("mousePosInDropArea Y: ", mousePosInDropArea.y);
-            toggleCursor();
-            setDropX(mousePosInDropArea.x-25);
-            setDropY(mousePosInDropArea.y-25);
+            setPosition(position => {
+                return {
+                    x: mousePosInDropArea.x-25,
+                    y: mousePosInDropArea.y-25,
+                    coords: {
+                        x: event.pageX,
+                        y: event.pageY,
+                    },
+            };
+            });
+            removeAttachment();
+
         }
     }
 
 
-    const toggleCursor = useCallback(() => {
-        setCursor(({active}) => ({active: !active}));
+    const removeAttachment = useCallback(() => {
+        setCursor(({active}) => ({active: false}));
     },[])
 
 
     const handleMouseUp = () => {
-        console.log("Mouse up...");
+        // console.log("Mouse up...");
     }
 
     const handleMouseEnter = () => {
-        console.log("Mouse entered...");
+        // console.log("Mouse entered...");
         setHovered(true);
     }
 
     const handleMouseLeave = () => {
-        console.log("Mouse left...");
+        // console.log("Mouse left...");
         setHovered(false)
     }
 
+    const handleDraggableMouseDown = (event : any) => {
+        console.log("Draggable mouse down...");
+        console.log("event page x", event.pageX);
+        // startDrag(event);
+        document.addEventListener('mousemove', handleDraggableMouseMove.current);
+    }
+
+    const handleDraggableMouseMove = useRef((e : any) => {
+        setPosition(position => {
+            const xDiff = position.coords.x - e.pageX;
+            const yDiff = position.coords.y - e.pageY;
+            return {
+                x: position.x - xDiff,
+                y: position.y - yDiff,
+                coords: {
+                    x: e.pageX,
+                    y: e.pageY,
+                },
+            };
+        });
+    });
+
+    const handleDraggableMouseUp = () => {
+        document.removeEventListener('mousemove', handleDraggableMouseMove.current);
+    }
 
 
     return (
@@ -82,7 +118,12 @@ const DroppableArea : React.FC = () => {
                     onMouseLeave={handleMouseLeave}
                     width="200"
                     height="200"/>
-                <rect width="30" height="30" x={dropX} y={dropY}/>
+                <rect
+                      ref={rectRef}
+                      className={'draggable'}
+                      onMouseDown={handleDraggableMouseDown}
+                      onMouseUp={handleDraggableMouseUp}
+                      width="30" height="30" x={position.x} y={position.y}/>
             </svg>
         </div>
       )

@@ -10,3 +10,8 @@
     stroke-dasharray: 3,3;
     stroke-linejoin: round;
 }
+
+.draggable {
+    cursor : pointer;
+    fill: blue;
+}
